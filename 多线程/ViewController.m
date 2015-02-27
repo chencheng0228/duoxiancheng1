@@ -32,24 +32,25 @@
     if (style== style1) {
         
     }
-//块
+    //块
     //返回值类型+传递参数=传递参数
     NSString* (^myBlock)(NSString*) =  ^(NSString * str){return str;};
     NSLog(@"%@",myBlock(@"HelloEveryBoday"));
     
-//===================================主线程===============================================
+//====================================主线程===============================================
    [self hello];
 // [self hello2];
     
-//=========================通过NSInvocationOperation实现多线程。=============================
+//=========================通过NSInvocationOperation实现多线程=============================
     
        NSOperationQueue *operationQueue = [[NSOperationQueue alloc]init];
        [operationQueue setMaxConcurrentOperationCount:2];
 
        //NSInvocationOperation *operation = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(hello) object:nil];
-    
+       //线程
        NSInvocationOperation *operation2 = [[NSInvocationOperation  alloc]initWithTarget:self selector:@selector(hello2) object:nil];
     
+
        //[operationQueue addOperation:operation];
        [operationQueue addOperation:operation2];
     
@@ -62,7 +63,7 @@
 //    [NSThread detachNewThreadSelector:@selector(hello) toTarget:self withObject:nil];
 //    [NSThread detachNewThreadSelector:@selector(hello2) toTarget:self withObject:nil];
 //                //(2)实例方法
-//    NSThread *thread = [[NSThread alloc]initWithTarget:self selector:@selector(hello)object:nil];
+//    NSThread *thread = [[NSThread alloc]initWithTarget:self   selector:@selector(hello)object:nil];
 //    [thread start];
 //    NSThread *thread2 = [[NSThread alloc]initWithTarget:self selector:@selector(hello2)object:nil];
 //    [thread2 start];
@@ -76,7 +77,7 @@
     
 //方法为我们在后台创建了一个线程。这等同于 我们为 selectors 创建一个新的线程。 但是要记住，必须在调用的方法中加上自动释放池！
 //    [self performSelectorInBackground:@selector(hello3) withObject:nil];
-//    [self performSelectorInBackground:@selector(hello4) withObject:nil];
+   [self performSelectorInBackground:@selector(hello4) withObject:nil];
     
     UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     
@@ -102,6 +103,7 @@
     //可以回到主线程在UI上进行更新
     //[self performSelectorOnMainThread:  withObject:  waitUntilDone: ];
 }
+
 -(void)hello2
 {
     for (int i=0; i<=2; i++) {
@@ -119,6 +121,7 @@
     
 }
 
+
 -(void)hello4
 {
     @autoreleasepool {
@@ -126,7 +129,6 @@
         NSLog(@"%d",i);
         }
     }
-    
 }
 
 - (void)didReceiveMemoryWarning
